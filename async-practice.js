@@ -357,4 +357,61 @@ async function runDelay() {
 
 runDelay();
 
-                                              
+
+// DAILY CHALLENGE - DAY 2
+// Promise Chain with Random Delays
+
+function taskOne() {
+    return new Promise((resolve) => {
+        const delay = Math.random() * 3000;
+
+        setTimeout(() => {
+            console.log("Task One completed!");
+            resolve("Result from Task One");
+        }, delay);
+    });
+}
+
+function taskTwo() {
+    return new Promise((resolve) => {
+        const delay = Math.random() * 3000;
+
+        setTimeout(() => {
+            console.log("Task Two completed!");
+            resolve("Result from Task Two");
+        }, delay);
+    });
+}
+
+function taskThree() {
+    return new Promise((resolve) => {
+        const delay = Math.random() * 3000;
+
+        setTimeout(() => {
+            console.log("Task Three completed!");
+            resolve("Result from Task Three");
+        }, delay);
+    });
+}
+
+// Measure total execution time
+
+console.time("Total execution time");
+
+taskOne()
+    .then((result) => {
+        console.log(result);
+        return taskTwo();
+    })
+    .then((result) => {
+        console.log(result);
+        return taskThree();
+    })
+    .then((result) => {
+        console.log(result);
+        console.timeEnd("Total execution time");
+    })
+    .catch((error) => {
+        console.log("Error:", error);
+    });
+
