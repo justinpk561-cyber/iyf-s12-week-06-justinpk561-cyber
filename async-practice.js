@@ -116,3 +116,30 @@ getUserDataPromise(1)
     .catch((error) => {
         console.log("Error:", error);
     });
+
+
+// Refactoring callbacks into Promises
+
+function getUserDataAsync(userId) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ id: userId, name: "Justin" });
+        }, 1000);
+    });
+}
+
+function getUserPostsAsync(userId) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(["My first post", "My second post"]);
+        }, 1000);
+    });
+}
+
+function getPostCommentsAsync(post) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve(["Great post!", "Nice work!"]);
+        }, 1000);
+    });
+}
