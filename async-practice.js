@@ -415,3 +415,25 @@ taskOne()
         console.log("Error:", error);
     });
 
+
+// DAILY CHALLENGE - DAY 4
+// Rewrite Callback Code with Async/Await
+
+async function getUserWithPostsAndComments(userId) {
+    try {
+        const user = await getUserDataAsync(userId);
+        console.log("User:", user);
+
+        const posts = await getUserPostsAsync(user.id);
+        console.log("Posts:", posts);
+
+        const comments = await getPostCommentsAsync(posts[0].id);
+        console.log("Comments:", comments);
+
+    } catch (error) {
+        console.log("Something went wrong:", error.message);
+    }
+}
+
+getUserWithPostsAndComments(1);
+
