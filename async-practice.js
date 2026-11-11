@@ -143,3 +143,22 @@ function getPostCommentsAsync(post) {
         }, 1000);
     });
 }
+
+
+// Task 11.3: Promise Chaining
+
+getUserDataAsync(1)
+    .then((user) => {
+        console.log("User:", user);
+        return getUserPostsAsync(user.id);
+    })
+    .then((posts) => {
+        console.log("Posts:", posts);
+        return getPostCommentsAsync(posts[0]);
+    })
+    .then((comments) => {
+        console.log("Comments:", comments);
+    })
+    .catch((error) => {
+        console.log("Something went wrong:", error);
+    });
