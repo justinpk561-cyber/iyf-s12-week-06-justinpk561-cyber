@@ -45,3 +45,27 @@ async function getUser(id) {
 }
 
 getUser(1);
+
+
+// Fetch all users from the API
+
+async function getAllUsers() {
+    try {
+        const response = await fetch(
+            "https://jsonplaceholder.typicode.com/users"
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch users");
+        }
+
+        const users = await response.json();
+
+        console.log("All users:", users);
+
+    } catch (error) {
+        console.log("Error:", error.message);
+    }
+}
+
+getAllUsers();
