@@ -191,3 +191,24 @@ Promise.race([fastPromise, slowPromise])
     .then((result) => {
         console.log(result);
     });
+
+
+// Task 11.4: Async/Await
+
+async function displayUserInformation() {
+    try {
+        const user = await getUserDataAsync(1);
+        console.log("User:", user);
+
+        const posts = await getUserPostsAsync(user.id);
+        console.log("Posts:", posts);
+
+        const comments = await getPostCommentsAsync(posts[0]);
+        console.log("Comments:", comments);
+
+    } catch (error) {
+        console.log("Error:", error);
+    }
+}
+
+displayUserInformation();
