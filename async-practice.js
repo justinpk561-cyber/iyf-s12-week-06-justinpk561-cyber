@@ -162,3 +162,32 @@ getUserDataAsync(1)
     .catch((error) => {
         console.log("Something went wrong:", error);
     });
+
+// Promise.all: Run three requests together
+
+Promise.all([
+    getUserDataAsync(1),
+    getUserDataAsync(2),
+    getUserDataAsync(3)
+])
+.then((users) => {
+    console.log("All users:", users);
+})
+.catch((error) => {
+    console.log("Error:", error);
+});
+
+// Promise.race: First Promise to finish wins
+
+const fastPromise = new Promise((resolve) => {
+    setTimeout(() => resolve("Fast Promise won!"), 1000);
+});
+
+const slowPromise = new Promise((resolve) => {
+    setTimeout(() => resolve("Slow Promise won!"), 3000);
+});
+
+Promise.race([fastPromise, slowPromise])
+    .then((result) => {
+        console.log(result);
+    });
