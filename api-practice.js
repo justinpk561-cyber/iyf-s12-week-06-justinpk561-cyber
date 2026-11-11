@@ -20,3 +20,28 @@ fetch("https://jsonplaceholder.typicode.com/users/1")
     .catch((error) => {
         console.log("Error:", error);
     });
+
+// Fetch a user using async/await
+
+async function getUser(id) {
+    try {
+        const response = await fetch(
+            `https://jsonplaceholder.typicode.com/users/${id}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch user");
+        }
+
+        const user = await response.json();
+
+        console.log("Fetched user:", user);
+
+        return user;
+
+    } catch (error) {
+        console.log("Error:", error.message);
+    }
+}
+
+getUser(1);
