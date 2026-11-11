@@ -54,3 +54,37 @@ function loadUser(userId, callback) {
 loadUser(1, (user) => {
     console.log("User:", user);
 });
+
+
+// Task 11.2: Callback Hell
+
+function getUserData(userId, callback) {
+    setTimeout(() => {
+        callback({ id: userId, name: "Justin" });
+    }, 1000);
+}
+
+function getUserPosts(userId, callback) {
+    setTimeout(() => {
+        callback(["My first post", "My second post"]);
+    }, 1000);
+}
+
+function getPostComments(post, callback) {
+    setTimeout(() => {
+        callback(["Great post!", "Nice work!"]);
+    }, 1000);
+}
+
+// Nested callbacks
+getUserData(1, (user) => {
+    console.log("User:", user);
+
+    getUserPosts(user.id, (posts) => {
+        console.log("Posts:", posts);
+
+        getPostComments(posts[0], (comments) => {
+            console.log("Comments:", comments);
+        });
+    });
+});
