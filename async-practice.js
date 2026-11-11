@@ -88,3 +88,31 @@ getUserData(1, (user) => {
         });
     });
 });
+
+
+// Creating a Promise
+
+function getUserDataPromise(userId) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (userId > 0) {
+                resolve({
+                    id: userId,
+                    name: "Justin"
+                });
+            } else {
+                reject("Invalid user ID!");
+            }
+        }, 1000);
+    });
+}
+
+// Using then() and catch()
+
+getUserDataPromise(1)
+    .then((user) => {
+        console.log("Promise user:", user);
+    })
+    .catch((error) => {
+        console.log("Error:", error);
+    });
