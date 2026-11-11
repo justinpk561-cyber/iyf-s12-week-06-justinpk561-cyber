@@ -212,3 +212,23 @@ async function displayUserInformation() {
 }
 
 displayUserInformation();
+
+
+// Parallel requests using async/await
+
+async function getMultipleUsers() {
+    try {
+        const users = await Promise.all([
+            getUserDataAsync(1),
+            getUserDataAsync(2),
+            getUserDataAsync(3)
+        ]);
+
+        console.log("All users loaded:", users);
+
+    } catch (error) {
+        console.log("Error loading users:", error);
+    }
+}
+
+getMultipleUsers();
