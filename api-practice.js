@@ -93,3 +93,51 @@ async function getUserPosts(userId) {
 }
 
 getUserPosts(1);
+
+
+// DAILY CHALLENGE - DAY 3
+// Error Handling with Default User
+
+async function fetchUserOrDefault(userId) {
+    try {
+        const response = await fetch(
+            `https://jsonplaceholder.typicode.com/users/${userId}`
+        );
+
+        if (response.status === 404) {
+            console.log("User not found. Returning default user.");
+
+            return {
+                id: 0,
+                name: "Guest User",
+                email: "guest@example.com"
+            };
+        }
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch user");
+        }
+
+        return await response.json();
+
+    } catch (error) {
+        console.log("Error:", error.message);
+
+        return {
+            id: 0,
+            name: "Guest User",
+            email: "guest@example.com"
+        };
+    }
+}
+
+// Test with an existing user
+fetchUserOrDefault(1).then((user) => {
+    console.log("User:", user);
+});
+
+// Test with a non-existing user
+fetchUserOrDefault(999).then((user) => {
+    console.log("Default user:", user);
+});
+                
