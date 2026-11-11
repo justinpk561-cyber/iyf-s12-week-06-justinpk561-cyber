@@ -211,7 +211,32 @@ async function displayUserInformation() {
     }
 }
 
-displayUserInformation();
+allUsers = users;
+populateCityFilter();
+displayUsers(allUsers);
+
+function displayUsers(users) {
+    usersContainer.innerHTML = "";
+
+    users.forEach((user) => {
+        const card = document.createElement("div");
+
+        const name = document.createElement("h2");
+        name.textContent = user.name;
+
+        const email = document.createElement("p");
+        email.textContent = "Email: " + user.email;
+
+        const city = document.createElement("p");
+        city.textContent = "City: " + user.address.city;
+
+        card.appendChild(name);
+        card.appendChild(email);
+        card.appendChild(city);
+
+        usersContainer.appendChild(card);
+    });
+}
 
 
 // Parallel requests using async/await
@@ -230,6 +255,7 @@ async function getMultipleUsers() {
         console.log("Error loading users:", error);
     }
 }
+let allUsers = [];
 
 getMultipleUsers();
 
@@ -254,4 +280,63 @@ async function loadCompleteUserData() {
 }
 
 loadCompleteUserData();
-    
+
+
+// Search, sort and filter functionality
+
+function applyFilters() {
+    const search = document.getElementById("search-input")
+        .value.toLowerCase();
+
+    const sort = document.getElementById("sort-select").value;
+
+    const city = document.getElementById("city-filter").value;
+
+    let filteredUsers = allUsers.filter((user) => {
+        const matchesSearch =
+            user.name.toLowerCase().includes(search) ||
+            user.email.toLowerCase().includes(search);
+
+        const matchesCity =
+            city === "all" || user.address.city === city;
+
+        return matchesSearch && matchesCity;
+    });
+
+    filteredUsers.sort((a, b) => {
+        return sort === "asc"
+            ? a.name.localeCompare(b.name)
+            : b.name.localeCompare(a.name);
+    });
+
+    displayUsers(filteredUsers);
+}
+
+function populateCityFilter() {
+    const cityFilter = document.getElementById("city-filter");
+
+    const cities = [...new Set(
+        allUsers.map((user) => user.address.city)
+    )];
+
+    cities.forEach((city) => {
+        const option = document.createElement("option");
+        option.value = city;
+        option.textContent = city;
+        cityFilter.appendChild(option);
+    });
+}
+
+function init() {
+    document.getElementById("search-input")
+        .addEventListener("input", applyFilters);
+
+    document.getElementById("sort-select")
+        .addEventListener("change", applyFilters);
+
+    document.getElementById("city-filter")
+        .addEventListener("change", applyFilters);
+}
+
+init();
+                                              
