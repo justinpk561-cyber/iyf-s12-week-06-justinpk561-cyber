@@ -437,3 +437,39 @@ async function getUserWithPostsAndComments(userId) {
 
 getUserWithPostsAndComments(1);
 
+
+// DAILY CHALLENGE - DAY 5
+// Parallel Fetches with Promise.allSettled
+
+async function fetchThreeEndpoints() {
+    const urls = [
+        "https://jsonplaceholder.typicode.com/users",
+        "https://jsonplaceholder.typicode.com/posts",
+        "https://jsonplaceholder.typicode.com/comments"
+    ];
+
+    const requests = urls.map(async (url, index) => {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("Request failed");
+        }
+
+        const data = await response.json();
+
+        console.log(`Endpoint ${index + 1} completed:`, data);
+
+        return data;
+    });
+
+    const results = await Promise.allSettled(requests);
+
+    results.forEach((result, index) => {
+        if (result.status === "rejected") {
+            console.log(`Endpoint ${index + 1} failed:`, result.reason);
+        }
+    });
+}
+
+fetchThreeEndpoints();
+                              
