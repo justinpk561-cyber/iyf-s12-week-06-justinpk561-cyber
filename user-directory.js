@@ -48,3 +48,58 @@ function displayUsers(users) {
 }
 
 loadUsers();
+
+// Task 12.3: POST Requests
+
+async function createPost(title, body, userId) {
+    try {
+        const response = await fetch(
+            "https://jsonplaceholder.typicode.com/posts",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    title: title,
+                    body: body,
+                    userId: userId
+                })
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error("Failed to create post");
+        }
+
+        return await response.json();
+
+    } catch (error) {
+        console.log("Error:", error.message);
+        throw error;
+    }
+}
+
+// Handle form submission
+
+const postForm = document.getElementById("post-form");
+const postResult = document.getElementById("post-result");
+
+postForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const title = document.getElementById("post-title").value;
+    const body = document.getElementById("post-body").value;
+
+    try {
+        const newPost = await createPost(title, body, 1);
+
+        postResult.textContent =
+            "Post created successfully! ID: " + newPost.id;
+
+        postForm.reset();
+
+    } catch (error) {
+        postResult.textContent = "Could not create post.";
+    }
+});
