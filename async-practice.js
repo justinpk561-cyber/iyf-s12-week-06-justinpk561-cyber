@@ -232,3 +232,26 @@ async function getMultipleUsers() {
 }
 
 getMultipleUsers();
+
+// Rewrite callback hell using async/await
+
+async function loadCompleteUserData() {
+    try {
+        const user = await getUserDataAsync(1);
+        console.log("User:", user);
+
+        const posts = await getUserPostsAsync(user.id);
+        console.log("Posts:", posts);
+
+        const comments = await getPostCommentsAsync(posts[0]);
+        console.log("Comments:", comments);
+
+        console.log("All data loaded successfully!");
+
+    } catch (error) {
+        console.log("Something went wrong:", error);
+    }
+}
+
+loadCompleteUserData();
+    
